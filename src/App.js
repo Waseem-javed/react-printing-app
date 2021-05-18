@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Container from '@material-ui/core/Container';
+import PdfComponent from "./components/PdfComponent";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import {
+  PDFDownloadLink,
+  loadingReportData
+} from "@react-pdf/renderer";
+
+class App extends Component {
+  render() {
+    return (
+      <Container maxWidth="sm">
+        <div className="form-group">
+          <label htmlFor="button" className="d-block small">
+            Click the Below Button to Download a PDF file
+          </label>
+          {!loadingReportData && (
+            <PDFDownloadLink
+              document={<PdfComponent />}
+              fileName="somename.pdf">
+              {({ blob, url, loading, error }) =>
+                loading ? "Loading document..." : "Download now!"
+              }
+            </PDFDownloadLink>
+          )}
+        </div>
+      </Container>
+    );
+}
 }
 
 export default App;
